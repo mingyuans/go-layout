@@ -25,3 +25,6 @@
 
 # Output files
 _output/
+
+# Ignore .local files.
+.local/

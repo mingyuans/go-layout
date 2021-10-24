@@ -16,5 +16,6 @@ func installUsersController(g *gin.RouterGroup) {
 	v1Users := g.Group("/user")
 	userController := controller_v1_user.NewUserController()
 
-	v1Users.GET(":name", userController.Get)
+	v1Users.GET("", userController.GetUsers)
+	v1Users.GET(":username", userController.Get)
 }

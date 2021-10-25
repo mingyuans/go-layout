@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/marmotedu/errors"
 	"github.com/marmotedu/log"
-	"net/http"
+	"github.com/mingyuans/go-layout/internal/pkg/code"
 )
 
 const (
@@ -15,11 +15,33 @@ const (
 	successMetaCode = 100000
 )
 
+var metaTypes = map[int]string{
+	200: "OK",
+	201: "Created",
+	202: "Accepted",
+	400: "BadRequest",
+	401: "Unauthorized",
+	403: "Forbidden",
+	404: "NotFound",
+	405: "MethodNotAllowed",
+	409: "Conflict",
+	422: "UnprocessableEntity",
+	429: "TooManyRequests",
+	500: "InternalError",
+	502: "InternalError",
+	503: "InternalError",
+	504: "InternalError",
+}
+
+type DetailError struct {
+	Detail string `json:"detail"`
+}
+
 type Meta struct {
-	Code    int      `json:"code"`
-	Type    string   `json:"type"`
-	Message string   `json:"message"`
-	Errors  []string `json:"errors"`
+	Code    int           `json:"code"`
+	Type    string        `json:"type"`
+	Message string        `json:"message"`
+	Errors  []DetailError `json:"errors"`
 }
 
 type Response struct {
@@ -77,8 +99,15 @@ func (b *builder) Build() (int, Response) {
 func (b *builder) buildErrorResponse() (int, Response) {
 	log.Errorf("%#+v", b.err)
 	coder := errors.ParseCoder(b.err)
-	b.Response.Meta.Code = coder.Code()
 	statusCode := b.buildStatusCode(coder.HTTPStatus())
+	b.Response.Meta.Code = coder.Code()
+	b.Response.Meta.Message = coder.String()
+	b.Response.Meta.Type = getMetaType(statusCode)
+	b.Response.Meta.Errors = []DetailError{
+		{
+			Detail: b.err.Error(),
+		},
+	}
 	return statusCode, *b.Response
 }
 
@@ -90,25 +119,22 @@ func (b *builder) buildStatusCode(statusCode int) int {
 }
 
 func (b *builder) buildSuccessResponse() (int, Response) {
-	var statusCode = http.StatusOK
-	method := b.context.Request.Method
-	switch {
-	case method == http.MethodGet && b.Response.Data == nil:
-		{
-			statusCode = http.StatusNotFound
-		}
-	default:
-
-	}
-
-	statusCode = b.buildStatusCode(statusCode)
-	if b.Response.Meta.Code == invalidStatusCode {
-		b.Response.Meta.Code = 100000
-	}
-	return statusCode, *b.Response
+	b.err = errors.WithCode(code.Success, "")
+	statusCode, response := b.buildErrorResponse()
+	// we don't fill meta.errors when the request is success.
+	response.Meta.Errors = nil
+	return statusCode, response
 }
 
 func (b *builder) SendJSON() {
 	statusCode, response := b.Build()
 	b.context.JSON(statusCode, response)
+}
+
+func getMetaType(statusCode int) string {
+	metaTypeString, ok := metaTypes[statusCode]
+	if !ok {
+		metaTypeString = ""
+	}
+	return metaTypeString
 }

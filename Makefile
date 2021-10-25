@@ -12,7 +12,7 @@ all: tidy gen format lint cover build
 # Build options
 # ⚠️ 这里自动使用 go.mod 的 module name 作为 ROOT_PACKAGE,
 # 如果不是，请手动设定;
-ROOT_PACKAGE=$(shell sed -n '1p' go.mod | sed "s/module\s*\(.*\)/\1/g")
+export ROOT_PACKAGE=$(shell sed -n '1p' go.mod | sed "s/\s*module\s*\(\w*.*\)/\1/g" | python -c "s=raw_input();print s.strip()")
 # ⚠️ 默认使用 xxxx/pkg/project-version 作为记录 version 的地方；
 # 如果不是，请手动设定;
 VERSION_PACKAGE=$(ROOT_PACKAGE)"/pkg/project-version"

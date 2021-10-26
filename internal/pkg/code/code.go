@@ -8,8 +8,25 @@ import (
 	"net/http"
 
 	"github.com/marmotedu/errors"
-	"github.com/novalagung/gubrak"
 )
+
+var metaTypes = map[int]string{
+	200: "OK",
+	201: "Created",
+	202: "Accepted",
+	400: "BadRequest",
+	401: "Unauthorized",
+	403: "Forbidden",
+	404: "NotFound",
+	405: "MethodNotAllowed",
+	409: "Conflict",
+	422: "UnprocessableEntity",
+	429: "TooManyRequests",
+	500: "InternalError",
+	502: "InternalError",
+	503: "InternalError",
+	504: "InternalError",
+}
 
 // ErrCode implements `github.com/marmotedu/errors`.Coder interface.
 type ErrCode struct {
@@ -56,9 +73,9 @@ func (coder ErrCode) HTTPStatus() int {
 
 // nolint: unparam,deadcode
 func register(code int, httpStatus int, message string, refs ...string) {
-	found, _ := gubrak.Includes([]int{200, 400, 401, 403, 404, 500}, httpStatus)
+	_, found := metaTypes[httpStatus]
 	if !found {
-		panic("http code not in `200, 400, 401, 403, 404, 500`")
+		panic("http code not be defined in code.metaTypes``")
 	}
 
 	var reference string
@@ -74,4 +91,12 @@ func register(code int, httpStatus int, message string, refs ...string) {
 	}
 
 	errors.MustRegister(coder)
+}
+
+func GetMetaType(statusCode int) string {
+	metaTypeString, ok := metaTypes[statusCode]
+	if !ok {
+		metaTypeString = ""
+	}
+	return metaTypeString
 }

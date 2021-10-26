@@ -10,6 +10,7 @@ import (
 type UserService interface {
 	Get(ctc context.Context, username string) (*User, error)
 	GetUsers(ctx context.Context) ([]User, error)
+	Create(ctx context.Context, username string) (*User, error)
 }
 
 type userServiceImpl struct {
@@ -41,4 +42,8 @@ func (u *userServiceImpl) GetUsers(ctx context.Context) ([]User, error) {
 func (u *userServiceImpl) Get(ctc context.Context, username string) (*User, error) {
 	log.Info("call userServiceImpl Get method.")
 	return nil, errors.WithCode(code.ErrUserNotFound, "Can't find the user.")
+}
+
+func (u *userServiceImpl) Create(ctx context.Context, username string) (*User, error) {
+	return nil, errors.WithCode(code.ErrUserAlreadyExist, "User is existed.")
 }

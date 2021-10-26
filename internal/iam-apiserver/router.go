@@ -18,4 +18,6 @@ func installUsersController(g *gin.RouterGroup) {
 
 	v1Users.GET("", userController.GetUsers)
 	v1Users.GET(":username", userController.Get)
+
+	v1Users.POST("", userController.CreateUser)
 }

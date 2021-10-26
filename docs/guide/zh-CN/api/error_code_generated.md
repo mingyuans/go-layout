@@ -44,5 +44,5 @@ IAM 系统支持的错误码列表如下：
 | ErrEncodingYaml | 100307 | 500 | Yaml data could not be encoded |
 | ErrDecodingYaml | 100308 | 500 | Yaml data could not be decoded |
 | ErrUserNotFound | 110001 | 404 | User not found |
-| ErrUserAlreadyExist | 110002 | 400 | User already exist |
+| ErrUserAlreadyExist | 110002 | 409 | User already exist |
 

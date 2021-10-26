@@ -31,5 +31,5 @@ func init() {
 	register(ErrEncodingYaml, 500, "Yaml data could not be encoded")
 	register(ErrDecodingYaml, 500, "Yaml data could not be decoded")
 	register(ErrUserNotFound, 404, "User not found")
-	register(ErrUserAlreadyExist, 400, "User already exist")
+	register(ErrUserAlreadyExist, 409, "User already exist")
 }

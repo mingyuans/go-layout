@@ -3,9 +3,9 @@ package iam_apiserver
 import (
 	"github.com/marmotedu/iam/pkg/shutdown"
 	"github.com/marmotedu/iam/pkg/shutdown/shutdownmanagers/posixsignal"
-	"github.com/marmotedu/log"
 	"github.com/mingyuans/go-layout/internal/iam-apiserver/config"
 	genericserver "github.com/mingyuans/go-layout/internal/pkg/server"
+	"github.com/mingyuans/go-layout/pkg/log"
 )
 
 type apiServer struct {

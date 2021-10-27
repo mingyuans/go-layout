@@ -18,7 +18,7 @@ import (
 	ginprometheus "github.com/zsais/go-gin-prometheus"
 	"golang.org/x/sync/errgroup"
 
-	"github.com/marmotedu/log"
+	"github.com/mingyuans/go-layout/pkg/log"
 )
 
 // GenericAPIServer contains state for an api server.

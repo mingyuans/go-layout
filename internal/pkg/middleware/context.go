@@ -6,18 +6,20 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-
-	"github.com/marmotedu/iam/pkg/log"
+	"github.com/mingyuans/go-layout/pkg/log"
 )
 
-// UsernameKey defines the key in gin context which represents the owner of the secret.
-const UsernameKey = "username"
+const (
+	KeyRequestID string = "reqId"
+)
 
 // Context is a middleware that injects common prefix fields to gin.Context.
 func Context() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.Set(log.KeyRequestID, c.GetString(XRequestIDKey))
-		c.Set(log.KeyUsername, c.GetString(UsernameKey))
+		// Filled required fields to new logger instance.
+		// Then, we can use `log.L(c)` to get logger instance.
+		logger := log.WithValues(KeyRequestID, c.GetString(XRequestIDKey))
+		c.Set(log.ContextKey, logger)
 		c.Next()
 	}
 }

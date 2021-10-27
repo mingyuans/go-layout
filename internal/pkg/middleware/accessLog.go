@@ -6,14 +6,13 @@ package middleware
 
 import (
 	"fmt"
+	"github.com/mingyuans/go-layout/pkg/log"
 	"io"
 	"os"
 	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/mattn/go-isatty"
-
-	"github.com/marmotedu/iam/pkg/log"
 )
 
 // defaultLogFormatter is the default log format function Logger middleware uses.
@@ -132,7 +131,7 @@ func LoggerWithConfig(conf gin.LoggerConfig) gin.HandlerFunc {
 
 			param.Path = path
 
-			log.L(c).Info(formatter(param))
+			log.FromContext(c).Info(formatter(param))
 		}
 	}
 }

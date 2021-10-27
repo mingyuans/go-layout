@@ -1,10 +1,10 @@
 package iam_apiserver
 
 import (
-	"github.com/marmotedu/log"
 	"github.com/mingyuans/go-layout/internal/iam-apiserver/config"
 	"github.com/mingyuans/go-layout/internal/iam-apiserver/options"
 	"github.com/mingyuans/go-layout/internal/pkg/app"
+	"github.com/mingyuans/go-layout/pkg/log"
 )
 
 const commandDesc = `The IAM API server validates and configures data

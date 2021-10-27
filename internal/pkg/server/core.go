@@ -3,8 +3,8 @@ package server
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/marmotedu/errors"
-	"github.com/marmotedu/log"
 	"github.com/mingyuans/go-layout/internal/pkg/code"
+	"github.com/mingyuans/go-layout/pkg/log"
 )
 
 const (
@@ -76,7 +76,9 @@ func (b *builder) Build() (int, Response) {
 }
 
 func (b *builder) buildErrorResponse() (int, Response) {
-	log.Errorf("%#+v", b.err)
+	if !errors.IsCode(b.err, code.Success) {
+		log.Errorf("%#+v", b.err)
+	}
 	coder := errors.ParseCoder(b.err)
 	statusCode := b.buildStatusCode(coder.HTTPStatus())
 	b.Response.Meta.Code = coder.Code()

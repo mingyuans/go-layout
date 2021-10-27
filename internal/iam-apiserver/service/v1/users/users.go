@@ -3,8 +3,8 @@ package service_v1_users
 import (
 	"context"
 	"github.com/marmotedu/errors"
-	"github.com/marmotedu/log"
 	"github.com/mingyuans/go-layout/internal/pkg/code"
+	"github.com/mingyuans/go-layout/pkg/log"
 )
 
 type UserService interface {
@@ -40,7 +40,7 @@ func (u *userServiceImpl) GetUsers(ctx context.Context) ([]User, error) {
 }
 
 func (u *userServiceImpl) Get(ctc context.Context, username string) (*User, error) {
-	log.Info("call userServiceImpl Get method.")
+	log.L(ctc).Info("call userServiceImpl Get method.")
 	return nil, errors.WithCode(code.ErrUserNotFound, "Can't find the user.")
 }
 

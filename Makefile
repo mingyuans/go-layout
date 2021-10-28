@@ -137,7 +137,7 @@ gen:
 ## install: Install iam system with all its components.
 .PHONY: install
 install:
-	@$(MAKE) install.install
+	@$(MAKE) tools.install
 
 ## swagger: Generate swagger document.
 .PHONY: swagger

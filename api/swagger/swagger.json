@@ -1,0 +1,221 @@
+{
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "description": "Identity and Access Management System.",
+    "title": "IAM Server API V1.",
+    "contact": {
+      "name": "xxxx",
+      "url": "http://xxxxx.com",
+      "email": "xxx@gmail.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    },
+    "version": "1.0.0"
+  },
+  "host": "iam.api.xxxx.com",
+  "basePath": "/v1",
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Create a user resource.",
+        "operationId": "UserRequest",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "Nickname",
+            "name": "nickname",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "Password",
+            "name": "password",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "Email",
+            "name": "email",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "Phone",
+            "name": "phone",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/UserResponse"
+          },
+          "default": {
+            "$ref": "#/responses/ErrorResponse"
+          }
+        }
+      }
+    },
+    "/users/{name}": {
+      "get": {
+        "description": "Get details for specified user according to input parameters.",
+        "tags": [
+          "users"
+        ],
+        "summary": "Get details for specified user.",
+        "operationId": "getUserRequest",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/UserResponse"
+          },
+          "default": {
+            "$ref": "#/responses/ErrorResponse"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ErrResponse": {
+      "description": "Reference will be omitted if it does not exist.",
+      "type": "object",
+      "title": "ErrResponse defines the return messages when an error occurred.",
+      "properties": {
+        "code": {
+          "description": "Code defines the business error code.",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Code"
+        },
+        "message": {
+          "description": "Message contains the detail of this message.\nThis message is suitable to be exposed to external",
+          "type": "string",
+          "x-go-name": "Message"
+        },
+        "reference": {
+          "description": "Reference returns the reference document which maybe useful to solve this error.",
+          "type": "string",
+          "x-go-name": "Reference"
+        }
+      },
+      "x-go-package": "github.com/marmotedu/component-base/pkg/core"
+    },
+    "Meta": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "Business error code. Please check the code with our docs.",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Code",
+          "example": 100000
+        },
+        "errors": {
+          "description": "The other messages. But most of this will be empty.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Errors",
+          "example": [
+            ""
+          ]
+        },
+        "message": {
+          "description": "The detail message of the error.",
+          "type": "string",
+          "x-go-name": "Message",
+          "example": "The user existed."
+        },
+        "type": {
+          "description": "The type of error.",
+          "type": "string",
+          "x-go-name": "Type",
+          "example": "NotFound"
+        }
+      },
+      "x-go-package": "github.com/mingyuans/go-layout/internal/pkg/server"
+    },
+    "User": {
+      "type": "object",
+      "required": [
+        "nickname",
+        "password",
+        "email"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "x-go-name": "Email"
+        },
+        "nickname": {
+          "type": "string",
+          "x-go-name": "Nickname"
+        },
+        "password": {
+          "type": "string",
+          "x-go-name": "Password"
+        },
+        "phone": {
+          "type": "string",
+          "x-go-name": "Phone"
+        }
+      },
+      "x-go-package": "github.com/mingyuans/go-layout/internal/iam-apiserver/service/v1/users"
+    }
+  },
+  "responses": {
+    "ErrorResponse": {
+      "description": "ErrorResponse The response means there is an error.",
+      "schema": {
+        "type": "object",
+        "required": [
+          "meta"
+        ],
+        "properties": {
+          "meta": {
+            "$ref": "#/definitions/Meta"
+          }
+        }
+      }
+    },
+    "UserResponse": {
+      "description": "UserResponse User response.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/definitions/User"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    },
+    "basic": {
+      "type": "basic"
+    }
+  }
+}

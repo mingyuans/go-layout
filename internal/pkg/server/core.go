@@ -17,10 +17,22 @@ type DetailError struct {
 }
 
 type Meta struct {
-	Code    int           `json:"code"`
-	Type    string        `json:"type"`
-	Message string        `json:"message"`
-	Errors  []DetailError `json:"errors"`
+	// Business error code. Please check the code with our docs.
+	//
+	// Example: 100000
+	Code int `json:"code"`
+	// The type of error.
+	//
+	// Example: NotFound
+	Type string `json:"type"`
+	// The detail message of the error.
+	//
+	// Example: The user existed.
+	Message string `json:"message"`
+	// The other messages. But most of this will be empty.
+	//
+	// Example: [""]
+	Errors []string `json:"errors"`
 }
 
 type Response struct {

@@ -51,6 +51,8 @@ ifneq ($(shell $(GO) version | grep -q -E '\bgo($(GO_SUPPORTED_VERSIONS))\b' && 
 	$(error unsupported go version. Please make install one of the following supported version: '$(GO_SUPPORTED_VERSIONS)')
 endif
 
+
+# make go.build.darwin_amd64.iam-apiserver
 .PHONY: go.build.%
 go.build.%:
 	$(eval COMMAND := $(word 2,$(subst ., ,$*)))

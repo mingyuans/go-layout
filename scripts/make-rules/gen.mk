@@ -52,6 +52,9 @@ gen.doc.cmd:
 	$(shell go run $(ROOT_DIR)/cmd/gencmddocs/gen_cmd_docs.go $(ROOT_DIR)/docs/cmds)
 	@echo "<=========== Please check docs at docs/cmds"
 
+.PHONY: gen.doc.api
+gen.doc.api: swagger.run
+
 .PHONY: gen.clean
 gen.clean:
 	@rm -rf ./api/client/{clientset,informers,listers}

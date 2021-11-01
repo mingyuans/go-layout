@@ -9,8 +9,9 @@
 .PHONY: swagger.run
 swagger.run: tools.verify.swagger
 	@echo "===========> Generating swagger API docs"
-	@swagger generate spec --scan-models -w $(ROOT_DIR)/cmd/genswaggerdocs -o $(ROOT_DIR)/api/swagger/swagger.json
+	@swagger generate spec --scan-models -w $(ROOT_DIR)/cmd/genswaggerdocs -o $(ROOT_DIR)/docs/api/swagger.json
+	@echo "<=========== Please check docs at docs/api"
 
 .PHONY: swagger.serve
 swagger.serve: tools.verify.swagger
-	@swagger serve -F=redoc --no-open --port 36666 $(ROOT_DIR)/api/swagger/swagger.json
+	@swagger serve -F=redoc --no-open --port 36666 $(ROOT_DIR)/docs/api/swagger.json

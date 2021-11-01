@@ -46,6 +46,12 @@ gen.docgo.add:
 gen.defaultconfigs:
 	@${ROOT_DIR}/scripts/gen_default_config.sh
 
+.PHONY: gen.doc.cmd
+gen.doc.cmd:
+	@echo "===========> Generating docs for all cmd"
+	$(shell go run $(ROOT_DIR)/cmd/gencmddocs/gen_cmd_docs.go $(ROOT_DIR)/docs/cmds)
+	@echo "<=========== Please check docs at docs/cmds"
+
 .PHONY: gen.clean
 gen.clean:
 	@rm -rf ./api/client/{clientset,informers,listers}

@@ -49,8 +49,8 @@ gen.defaultconfigs:
 .PHONY: gen.doc.cmd
 gen.doc.cmd:
 	@echo "===========> Generating docs for all cmd"
-	$(shell go run $(ROOT_DIR)/cmd/gencmddocs/gen_cmd_docs.go $(ROOT_DIR)/docs/cmds)
-	@echo "<=========== Please check docs at docs/cmds"
+	$(shell go run $(ROOT_DIR)/cmd/gencmddocs/gen_cmd_docs.go $(ROOT_DIR)/docs/cmd)
+	@echo "<=========== Please check docs at docs/cmd"
 
 .PHONY: gen.doc.api
 gen.doc.api: swagger.run

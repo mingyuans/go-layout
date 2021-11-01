@@ -1,12 +1,11 @@
-// Copyright 2020 Lingfei Kong <colin404@foxmail.com>. All rights reserved.
-// Use of this source code is governed by a MIT style
-// license that can be found in the LICENSE file.
-
+// This tool helps to generate Linux man docs.
+// About Linux man command, please see: https://blog.csdn.net/shuizhizhiyin/article/details/51668962
 package main
 
 import (
 	"bytes"
 	"fmt"
+	iam_apiserver "github.com/mingyuans/go-layout/internal/iam-apiserver"
 	"io"
 	"os"
 	"strings"
@@ -15,69 +14,48 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 
-	"github.com/marmotedu/iam/internal/apiserver"
-	"github.com/marmotedu/iam/internal/authzserver"
-	"github.com/marmotedu/iam/internal/iamctl/cmd"
-	"github.com/marmotedu/iam/internal/pump"
 	"github.com/marmotedu/iam/pkg/util/genutil"
 )
 
+type genFunc func() (string, *cobra.Command)
+
 func main() {
+	modules := []genFunc{
+		genApiServerCmdDoc,
+	}
+
 	// use os.Args instead of "flags" because "flags" will mess up the man pages!
 	path := "docs/man/man1"
-	module := ""
-	if len(os.Args) == 3 {
+	if len(os.Args) == 2 {
 		path = os.Args[1]
-		module = os.Args[2]
 	} else {
-		fmt.Fprintf(os.Stderr, "usage: %s [output directory] [module] \n", os.Args[0])
+		_, _ = fmt.Fprintf(os.Stderr, "usage: %s [output directory] [module] \n", os.Args[0])
 		os.Exit(1)
 	}
 
 	outDir, err := genutil.OutDir(path)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "failed to get output directory: %v\n", err)
+		_, _ = fmt.Fprintf(os.Stderr, "failed to get output directory: %v\n", err)
 		os.Exit(1)
 	}
 
 	// Set environment variables used by command so the output is consistent,
 	// regardless of where we run.
-	os.Setenv("HOME", "/home/username")
+	_ = os.Setenv("HOME", "/home/username")
 
-	switch module {
-	case "iam-apiserver":
-		// generate manpage for iam-apiserver
-		apiServer := apiserver.NewApp("iam-apiserver").Command()
-		genMarkdown(apiServer, "", outDir)
-		for _, c := range apiServer.Commands() {
-			genMarkdown(c, "iam-apiserver", outDir)
+	for _, genFunc := range modules {
+		module, cmd := genFunc()
+		genMarkdown(cmd, "", outDir)
+		for _, c := range cmd.Commands() {
+			genMarkdown(c, module, outDir)
 		}
-	case "iam-authz-server":
-		// generate manpage for iam-authz-server
-		authzServer := authzserver.NewApp("iam-authz-server").Command()
-		genMarkdown(authzServer, "", outDir)
-		for _, c := range authzServer.Commands() {
-			genMarkdown(c, "iam-authz-server", outDir)
-		}
-	case "iam-pump":
-		// generate manpage for iam-pump
-		pump := pump.NewApp("iam-pump").Command()
-		genMarkdown(pump, "", outDir)
-		for _, c := range pump.Commands() {
-			genMarkdown(c, "iam-pump", outDir)
-		}
-	case "iamctl":
-		// generate manpage for iamctl
-		// TODO os.Stdin should really be something like ioutil.Discard, but a Reader
-		iamctl := cmd.NewDefaultIAMCtlCommand()
-		genMarkdown(iamctl, "", outDir)
-		for _, c := range iamctl.Commands() {
-			genMarkdown(c, "iamctl", outDir)
-		}
-	default:
-		fmt.Fprintf(os.Stderr, "Module %s is not supported", module)
-		os.Exit(1)
 	}
+}
+
+func genApiServerCmdDoc() (string, *cobra.Command) {
+	module := "iam-apiserver"
+	cmd := iam_apiserver.NewApp(module).Command()
+	return module, cmd
 }
 
 func preamble(out *bytes.Buffer, name, short, long string) {
@@ -86,11 +64,11 @@ func preamble(out *bytes.Buffer, name, short, long string) {
 % Jan 2015
 # NAME
 `)
-	fmt.Fprintf(out, "%s \\- %s\n\n", name, short)
-	fmt.Fprintf(out, "# SYNOPSIS\n")
-	fmt.Fprintf(out, "**%s** [OPTIONS]\n\n", name)
-	fmt.Fprintf(out, "# DESCRIPTION\n")
-	fmt.Fprintf(out, "%s\n\n", long)
+	_, _ = fmt.Fprintf(out, "%s \\- %s\n\n", name, short)
+	_, _ = fmt.Fprintf(out, "# SYNOPSIS\n")
+	_, _ = fmt.Fprintf(out, "**%s** [OPTIONS]\n\n", name)
+	_, _ = fmt.Fprintf(out, "# DESCRIPTION\n")
+	_, _ = fmt.Fprintf(out, "%s\n\n", long)
 }
 
 func printFlags(out io.Writer, flags *pflag.FlagSet) {
@@ -106,9 +84,9 @@ func printFlags(out io.Writer, flags *pflag.FlagSet) {
 		// Using len(flag.ShorthandDeprecated) > 0 can't handle this, others are ok.
 		if !(len(flag.ShorthandDeprecated) > 0) && len(flag.Shorthand) > 0 {
 			format = "**-%s**, " + format
-			fmt.Fprintf(out, format, flag.Shorthand, flag.Name, flag.DefValue, flag.Usage)
+			_, _ = fmt.Fprintf(out, format, flag.Shorthand, flag.Name, flag.DefValue, flag.Usage)
 		} else {
-			fmt.Fprintf(out, format, flag.Name, flag.DefValue, flag.Usage)
+			_, _ = fmt.Fprintf(out, format, flag.Name, flag.DefValue, flag.Usage)
 		}
 	})
 }
@@ -116,9 +94,9 @@ func printFlags(out io.Writer, flags *pflag.FlagSet) {
 func printOptions(out io.Writer, command *cobra.Command) {
 	flags := command.NonInheritedFlags()
 	if flags.HasFlags() {
-		fmt.Fprintf(out, "# OPTIONS\n")
+		_, _ = fmt.Fprintf(out, "# OPTIONS\n")
 		printFlags(out, flags)
-		fmt.Fprintf(out, "\n")
+		_, _ = fmt.Fprintf(out, "\n")
 	}
 	flags = command.InheritedFlags()
 	if flags.HasFlags() {
@@ -149,23 +127,23 @@ func genMarkdown(command *cobra.Command, parent, docsDir string) {
 	printOptions(out, command)
 
 	if len(command.Example) > 0 {
-		fmt.Fprintf(out, "# EXAMPLE\n")
-		fmt.Fprintf(out, "```\n%s\n```\n", command.Example)
+		_, _ = fmt.Fprintf(out, "# EXAMPLE\n")
+		_, _ = fmt.Fprintf(out, "```\n%s\n```\n", command.Example)
 	}
 
 	if len(command.Commands()) > 0 || len(parent) > 0 {
-		fmt.Fprintf(out, "# SEE ALSO\n")
+		_, _ = fmt.Fprintf(out, "# SEE ALSO\n")
 
 		if len(parent) > 0 {
-			fmt.Fprintf(out, "**%s(1)**, ", dparent)
+			_, _ = fmt.Fprintf(out, "**%s(1)**, ", dparent)
 		}
 
 		for _, c := range command.Commands() {
-			fmt.Fprintf(out, "**%s-%s(1)**, ", dname, c.Name())
+			_, _ = fmt.Fprintf(out, "**%s-%s(1)**, ", dname, c.Name())
 			genMarkdown(c, name, docsDir)
 		}
 
-		fmt.Fprintf(out, "\n")
+		_, _ = fmt.Fprintf(out, "\n")
 	}
 
 	out.WriteString(`

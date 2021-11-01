@@ -55,6 +55,13 @@ gen.doc.cmd:
 .PHONY: gen.doc.api
 gen.doc.api: swagger.run
 
+.PHONY: gen.doc.man
+gen.doc.man:
+	@echo "===========> Generating man for all cmd"
+	$(shell go run $(ROOT_DIR)/cmd/genman/gen_mans.go $(ROOT_DIR)/docs/man)
+	@echo "<=========== Please check the docs at docs/man"
+
+
 .PHONY: gen.clean
 gen.clean:
 	@rm -rf ./api/client/{clientset,informers,listers}

@@ -4,10 +4,15 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/mingyuans/go-layout/internal/pkg/server"
 	"github.com/mingyuans/go-layout/pkg/log"
+	"go.uber.org/zap"
 )
 
+// Get GET users/userid
 func (u *UserController) Get(c *gin.Context) {
 	log.L(c).Info("Get user function called.")
+
+	userid := c.Param("userid")
+	log.L(c).Info("Get user.", zap.String("userid", userid))
 
 	user, err := u.srv.Users().Get(c, "sss")
 	server.NewRestfulResponseBuilder(c).

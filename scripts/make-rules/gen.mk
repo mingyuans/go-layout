@@ -22,7 +22,10 @@ gen.errcode.code: tools.verify.codegen
 gen.errcode.doc: tools.verify.codegen
 	@echo "===========> Generating error code markdown documentation"
 	@codegen -type=int -doc \
-		-output ${ROOT_DIR}/docs/guide/zh-CN/api/error_code_generated.md ${ROOT_DIR}/internal/pkg/code
+		-output ${ROOT_DIR}/docs/api/error_code_generated.md ${ROOT_DIR}/internal/pkg/code
+
+.PHONY: gen.doc.code
+gen.doc.code: gen.errcode.doc
 
 .PHONY: gen.docgo.doc
 gen.docgo.doc:

@@ -25,7 +25,7 @@ _DOCKER_BUILD_EXTRA_ARGS += $(EXTRA_ARGS)
 endif
 
 # Determine image files by looking into build/docker/*/Dockerfile
-IMAGES_DIR ?= $(wildcard ${ROOT_DIR}/build/docker/*)
+IMAGES_DIR ?= $(filter-out %.md,$(wildcard ${ROOT_DIR}/build/docker/*))
 # Determine images names by stripping out the dir names
 IMAGES ?= $(filter-out tools,$(foreach image,${IMAGES_DIR},$(notdir ${image})))
 

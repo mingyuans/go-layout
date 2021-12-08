@@ -6,6 +6,8 @@ import (
 	"github.com/mingyuans/go-layout/internal/iam-apiserver/config"
 	genericserver "github.com/mingyuans/go-layout/internal/pkg/server"
 	"github.com/mingyuans/go-layout/pkg/log"
+	// Auto set max process
+	_ "go.uber.org/automaxprocs"
 )
 
 type apiServer struct {

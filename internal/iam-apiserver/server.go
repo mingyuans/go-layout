@@ -4,6 +4,8 @@ import (
 	"github.com/marmotedu/iam/pkg/shutdown"
 	"github.com/marmotedu/iam/pkg/shutdown/shutdownmanagers/posixsignal"
 	"github.com/mingyuans/go-layout/internal/iam-apiserver/config"
+	"github.com/mingyuans/go-layout/internal/iam-apiserver/http"
+	http_resty "github.com/mingyuans/go-layout/internal/iam-apiserver/http/resty"
 	genericserver "github.com/mingyuans/go-layout/internal/pkg/server"
 	"github.com/mingyuans/go-layout/pkg/log"
 	// Auto set max process
@@ -11,6 +13,7 @@ import (
 )
 
 type apiServer struct {
+	conf          *config.Config
 	shutdown      *shutdown.GracefulShutdown
 	restAPIServer *genericserver.GenericAPIServer
 }
@@ -37,6 +40,7 @@ func createAPIServer(cfg *config.Config) (*apiServer, error) {
 	}
 
 	server := &apiServer{
+		conf:          cfg,
 		shutdown:      gs,
 		restAPIServer: genericServer,
 	}
@@ -94,4 +98,13 @@ func (s preparedAPIServer) Run() error {
 	}
 
 	return s.restAPIServer.Run()
+}
+
+func (s preparedAPIServer) initHttpClients() {
+	//Use resty as our http client.
+	clientFactory := http_resty.NewFactory(
+		*s.conf.WX,
+	)
+
+	http.SetFactory(clientFactory)
 }

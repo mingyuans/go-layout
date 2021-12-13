@@ -2,6 +2,7 @@ package options
 
 import (
 	cliflag "github.com/marmotedu/component-base/pkg/cli/flag"
+	http_options "github.com/mingyuans/go-layout/internal/iam-apiserver/http/options"
 	genericserver "github.com/mingyuans/go-layout/internal/pkg/server"
 	"github.com/mingyuans/go-layout/pkg/log"
 )
@@ -12,6 +13,7 @@ type Options struct {
 	SecureServing           *genericserver.SecureServingOptions   `json:"secure"   mapstructure:"secure"`
 	FeatureOptions          *genericserver.FeatureOptions         `json:"feature"  mapstructure:"feature"`
 	Log                     *log.Options
+	WX                      *http_options.WXClientOption `json:"wechat" mapstructure:"wechat"`
 }
 
 func (o *Options) Flags() cliflag.NamedFlagSets {
@@ -22,6 +24,7 @@ func (o *Options) Flags() cliflag.NamedFlagSets {
 	o.SecureServing.AddFlags(fss.FlagSet("secure"))
 	o.FeatureOptions.AddFlags(fss.FlagSet("feature"))
 	o.Log.AddFlags(fss.FlagSet("logs"))
+	o.WX.AddFlags(fss.FlagSet("wx"))
 	return fss
 }
 
@@ -32,6 +35,7 @@ func NewOptions() *Options {
 		SecureServing:           genericserver.NewSecureServingOptions(),
 		FeatureOptions:          genericserver.NewFeatureOptions(),
 		Log:                     log.NewOptions(),
+		WX:                      http_options.NewWXClientOption(),
 	}
 	return &o
 }

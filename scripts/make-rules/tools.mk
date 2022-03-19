@@ -124,7 +124,6 @@ install.kube-score:
 
 .PHONY: install.gitlint
 install.gitlint:
-    $(shell curl https://raw.githubusercontent.com/llorllale/go-gitlint/master/download-gitlint.sh > download-gitlint.sh && chmod +x download-gitlint.sh)
-	$(shell ./download-gitlint.sh -b /usr/local/bin)
-    $(shell rm download-gitlint.sh)
+    $(shell chmod +x ./scripts/install_gitlint.sh)
+    $(shell ./scripts/install_gitlint.sh)
 

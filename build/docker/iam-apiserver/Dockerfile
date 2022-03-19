@@ -12,4 +12,4 @@ RUN mkdir -p /var/log/iam
 COPY iam-apiserver /opt/iam/bin/
 
 ENTRYPOINT ["/opt/iam/bin/iam-apiserver"]
-CMD ["-c", "/etc/iam/iam-apiserver.yaml"]
+CMD ["-c", "/etc/iam/production-iam-apiserver.yaml"]

@@ -28,6 +28,7 @@ include scripts/make-rules/gen.mk
 include scripts/make-rules/swagger.mk
 include scripts/make-rules/dependencies.mk
 include scripts/make-rules/tools.mk
+include scripts/make-rules/local.mk
 
 # ==============================================================================
 # Usage
@@ -63,6 +64,9 @@ build:
 .PHONY: build.multiarch
 build.multiarch:
 	@$(MAKE) go.build.multiarch
+
+.PHONY: local
+local: local.run
 
 ## image: Build docker images for host arch.
 .PHONY: image

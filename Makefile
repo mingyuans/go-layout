@@ -25,7 +25,6 @@ include scripts/make-rules/golang.mk
 include scripts/make-rules/image.mk
 include scripts/make-rules/deploy.mk
 include scripts/make-rules/gen.mk
-include scripts/make-rules/release.mk
 include scripts/make-rules/swagger.mk
 include scripts/make-rules/dependencies.mk
 include scripts/make-rules/tools.mk
@@ -110,15 +109,6 @@ test:
 .PHONY: cover
 cover:
 	@$(MAKE) go.test.cover
-
-.PHONY: release.build
-release.build:
-	@$(MAKE) push.multiarch
-
-## release: Release iam
-.PHONY: release
-release:
-	@$(MAKE) release.run
 
 ## format: Gofmt (reformat) package sources (exclude vendor dir if existed).
 .PHONY: format

@@ -124,6 +124,5 @@ install.kube-score:
 
 .PHONY: install.gitlint
 install.gitlint:
-    $(shell chmod +x ./scripts/install_gitlint.sh)
-    $(shell ./scripts/install_gitlint.sh)
+	sh ./scripts/install_gitlint.sh
 

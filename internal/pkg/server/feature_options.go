@@ -6,8 +6,10 @@ import (
 
 // FeatureOptions contains configuration items related to API server features.
 type FeatureOptions struct {
+	// default: true
 	EnableProfiling bool `json:"profiling"      mapstructure:"profiling"`
-	EnableMetrics   bool `json:"enable-metrics" mapstructure:"enable-metrics"`
+	// default: true
+	EnableMetrics bool `json:"enable-metrics" mapstructure:"enable-metrics"`
 }
 
 // NewFeatureOptions creates a FeatureOptions object with default parameters.

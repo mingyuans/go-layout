@@ -1,8 +1,8 @@
-package iam_apiserver
+package apiserver
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/mingyuans/go-layout/internal/iam-apiserver/controller/v1/users"
+	"github.com/mingyuans/go-layout/internal/apiserver/controller/v1/users"
 )
 
 //Install APIs

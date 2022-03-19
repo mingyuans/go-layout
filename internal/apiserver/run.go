@@ -1,6 +1,6 @@
-package iam_apiserver
+package apiserver
 
-import "github.com/mingyuans/go-layout/internal/iam-apiserver/config"
+import "github.com/mingyuans/go-layout/internal/apiserver/config"
 
 func Run(cfg *config.Config) error {
 	server, err := createAPIServer(cfg)

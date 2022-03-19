@@ -1,7 +1,7 @@
 package main
 
 import (
-	iam_apiserver "github.com/mingyuans/go-layout/internal/iam-apiserver"
+	"github.com/mingyuans/go-layout/internal/apiserver"
 	"math/rand"
 	"os"
 	"runtime"
@@ -16,7 +16,7 @@ func main() {
 		runtime.GOMAXPROCS(runtime.NumCPU())
 	}
 
-	//basename 最好保持跟这个  internal/iam-apiserver 这个文件夹名一致；
+	//basename 最好保持跟这个  internal/apiserver 这个文件夹名一致；
 	//因为这个 basename 会作为 cmd 命令，而 MK 编译处理的 exec 文件是按文件名来的。
-	iam_apiserver.NewApp("iam-apiserver").Run()
+	apiserver.NewApp("apiserver").Run()
 }

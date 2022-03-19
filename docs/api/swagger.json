@@ -178,7 +178,7 @@
           "x-go-name": "Phone"
         }
       },
-      "x-go-package": "github.com/mingyuans/go-layout/internal/iam-apiserver/service/v1/users"
+      "x-go-package": "github.com/mingyuans/go-layout/internal/apiserver/service/v1/users"
     }
   },
   "responses": {

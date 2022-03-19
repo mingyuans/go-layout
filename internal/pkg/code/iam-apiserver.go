@@ -2,7 +2,7 @@ package code
 
 //go:generate codegen -type=int
 
-// iam-apiserver: user errors.
+// apiserver: user errors.
 const (
 	// ErrUserNotFound - 404: User not found.
 	ErrUserNotFound int = iota + 110001

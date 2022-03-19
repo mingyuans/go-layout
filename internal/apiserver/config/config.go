@@ -1,6 +1,6 @@
 package config
 
-import "github.com/mingyuans/go-layout/internal/iam-apiserver/options"
+import "github.com/mingyuans/go-layout/internal/apiserver/options"
 
 // Config is the running configuration structure of the service.
 type Config struct {

@@ -3,7 +3,7 @@ package main
 
 import (
 	"fmt"
-	iam_apiserver "github.com/mingyuans/go-layout/internal/iam-apiserver"
+	"github.com/mingyuans/go-layout/internal/apiserver"
 	"github.com/spf13/cobra"
 	"os"
 
@@ -41,7 +41,7 @@ func main() {
 }
 
 func genApiServerCmdDoc() (string, *cobra.Command) {
-	module := "iam-apiserver"
-	cmd := iam_apiserver.NewApp(module).Command()
+	module := "apiserver"
+	cmd := apiserver.NewApp(module).Command()
 	return module, cmd
 }

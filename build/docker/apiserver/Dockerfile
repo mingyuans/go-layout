@@ -5,11 +5,11 @@
 FROM BASE_IMAGE
 MAINTAINER Xiangqun Yan <yanxiangqunwork@163.com>
 
-WORKDIR /opt/iam
+WORKDIR /opt/api
 
-RUN mkdir -p /var/log/iam
+RUN mkdir -p /var/log/api
 
-COPY iam-apiserver /opt/iam/bin/
+COPY apiserver /opt/api/bin/
 
-ENTRYPOINT ["/opt/iam/bin/iam-apiserver"]
-CMD ["-c", "/etc/iam/production-iam-apiserver.yaml"]
+ENTRYPOINT ["/opt/api/bin/apiserver"]
+CMD ["-c", "/etc/api/production-apiserver.yaml"]

@@ -1,8 +1,8 @@
-package iam_apiserver
+package apiserver
 
 import (
-	"github.com/mingyuans/go-layout/internal/iam-apiserver/config"
-	"github.com/mingyuans/go-layout/internal/iam-apiserver/options"
+	"github.com/mingyuans/go-layout/internal/apiserver/config"
+	"github.com/mingyuans/go-layout/internal/apiserver/options"
 	"github.com/mingyuans/go-layout/internal/pkg/app"
 	"github.com/mingyuans/go-layout/pkg/log"
 )
@@ -11,14 +11,14 @@ const commandDesc = `The IAM API server validates and configures data
 for the api objects which include users, policies, secrets, and
 others. The API Server services REST operations to do the api objects management.
 
-Find more iam-apiserver information at:
-https://github.com/marmotedu/iam/blob/master/docs/guide/en-US/cmd/iam-apiserver.md`
+Find more apiserver information at:
+https://github.com/marmotedu/iam/blob/master/docs/guide/en-US/cmd/apiserver.md`
 
 func NewApp(basename string) *app.App {
 	opts := options.NewOptions()
 	application := app.NewApp(
 		//name 也用于 CMD 的 short description
-		"iam-apiserver",
+		"apiserver",
 		basename,
 		app.WithOptions(opts),
 		app.WithDescription(commandDesc),

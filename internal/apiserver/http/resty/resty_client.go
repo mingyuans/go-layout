@@ -2,8 +2,8 @@ package http_resty
 
 import (
 	"github.com/go-resty/resty/v2"
-	"github.com/mingyuans/go-layout/internal/iam-apiserver/http"
-	http_options "github.com/mingyuans/go-layout/internal/iam-apiserver/http/options"
+	"github.com/mingyuans/go-layout/internal/apiserver/http"
+	http_options "github.com/mingyuans/go-layout/internal/apiserver/http/options"
 )
 
 type restyFactory struct {

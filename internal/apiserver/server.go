@@ -1,11 +1,11 @@
-package iam_apiserver
+package apiserver
 
 import (
 	"github.com/marmotedu/iam/pkg/shutdown"
 	"github.com/marmotedu/iam/pkg/shutdown/shutdownmanagers/posixsignal"
-	"github.com/mingyuans/go-layout/internal/iam-apiserver/config"
-	"github.com/mingyuans/go-layout/internal/iam-apiserver/http"
-	http_resty "github.com/mingyuans/go-layout/internal/iam-apiserver/http/resty"
+	"github.com/mingyuans/go-layout/internal/apiserver/config"
+	"github.com/mingyuans/go-layout/internal/apiserver/http"
+	http_resty "github.com/mingyuans/go-layout/internal/apiserver/http/resty"
 	genericserver "github.com/mingyuans/go-layout/internal/pkg/server"
 	"github.com/mingyuans/go-layout/pkg/log"
 	// Auto set max process

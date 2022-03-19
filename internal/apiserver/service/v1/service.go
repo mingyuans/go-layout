@@ -1,6 +1,6 @@
 package service_v1
 
-import users "github.com/mingyuans/go-layout/internal/iam-apiserver/service/v1/users"
+import users "github.com/mingyuans/go-layout/internal/apiserver/service/v1/users"
 
 type Service interface {
 	Users() users.UserService

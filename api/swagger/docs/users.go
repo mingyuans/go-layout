@@ -1,6 +1,6 @@
 package docs
 
-import service_v1_users "github.com/mingyuans/go-layout/internal/iam-apiserver/service/v1/users"
+import service_v1_users "github.com/mingyuans/go-layout/internal/apiserver/service/v1/users"
 
 // UserResponse User response.
 // swagger:response UserResponse

@@ -16,11 +16,11 @@ func (u *UserController) Get(c *gin.Context) {
 	userid := c.Param("userid")
 	log.L(c).Info("Get user.", zap.String("userid", userid))
 
-	errs := validator.New().Var(userid,"required,len=32")
+	errs := validator.New().Var(userid, "required,len=32")
 	if errs != nil {
 		fmt.Println(errs)
 		server.NewRestfulResponseBuilder(c).
-			Error(errors.WithCode(code.ErrValidation,"The user id {%s} is invalid.",userid)).
+			Error(errors.WithCode(code.ErrValidation, "The user id {%s} is invalid.", userid)).
 			SendJSON()
 		return
 	}

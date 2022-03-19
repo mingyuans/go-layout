@@ -4,8 +4,8 @@ import (
 	"context"
 	"github.com/go-resty/resty/v2"
 	"github.com/marmotedu/errors"
-	"github.com/mingyuans/go-layout/internal/iam-apiserver/http"
-	"github.com/mingyuans/go-layout/internal/iam-apiserver/http/options"
+	"github.com/mingyuans/go-layout/internal/apiserver/http"
+	"github.com/mingyuans/go-layout/internal/apiserver/http/options"
 	"github.com/mingyuans/go-layout/internal/pkg/code"
 )
 

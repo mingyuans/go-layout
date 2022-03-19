@@ -2,7 +2,7 @@ package options
 
 import (
 	cliflag "github.com/marmotedu/component-base/pkg/cli/flag"
-	http_options "github.com/mingyuans/go-layout/internal/iam-apiserver/http/options"
+	http_options "github.com/mingyuans/go-layout/internal/apiserver/http/options"
 	genericserver "github.com/mingyuans/go-layout/internal/pkg/server"
 	"github.com/mingyuans/go-layout/pkg/log"
 )

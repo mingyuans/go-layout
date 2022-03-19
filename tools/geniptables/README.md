@@ -35,7 +35,7 @@ hosts:
   - 10.0.4.20
   - 10.0.4.21
 
-# 来源IP可以访问的应用端口列表（iam-apiserver, iam-authz-server, iam-pump对外暴露的的端口）
+# 来源IP可以访问的应用端口列表（apiserver, iam-authz-server, iam-pump对外暴露的的端口）
 ports:
   - 8080
   - 8443
@@ -207,7 +207,7 @@ hosts:
   - 10.0.4.21
   - 10.0.4.22
 
-# 来源IP可以访问的应用端口列表（iam-apiserver, iam-authz-server, iam-pump对外暴露的的端口）
+# 来源IP可以访问的应用端口列表（apiserver, iam-authz-server, iam-pump对外暴露的的端口）
 ports:
   - 8080
   - 8443
